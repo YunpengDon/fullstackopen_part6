@@ -6,6 +6,13 @@ const App = () => {
 
   const vote = (id) => {
     console.log('vote', id)
+    const action  ={
+      type: 'VOTE',
+      payload: {
+        id: id
+      }
+    }
+    dispatch(action)
   }
 
   return (
