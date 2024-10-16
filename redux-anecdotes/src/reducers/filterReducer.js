@@ -1,5 +1,4 @@
 import { createSlice } from "@reduxjs/toolkit"
-import reducer from "../../../../state_management/src/reducers/noteReducer"
 
 const filterSlice = createSlice({
   name: 'filter',

@@ -1,6 +1,5 @@
 import { useSelector, useDispatch } from 'react-redux'
 import { createSelector } from '@reduxjs/toolkit'
-import { voteAnecdote} from '../reducers/anecdoteReducer'
 
 const AnecdotesList = () => {
   // const anecdotes = useSelector(state => state.anecdotes)
@@ -15,12 +14,18 @@ const AnecdotesList = () => {
     }
   )
   const anecdotes = useSelector(selectFilteredAnecdotes)
+  
   const dispatch = useDispatch()
   
   const vote = (id) => {
-    dispatch(voteAnecdote(id))
+    dispatch({
+      type: 'anecdotes/voteAnecdote',
+      payload: {
+        id: id
+      }
+    })
   }
-  
+
   return (
     <>
     {anecdotes.map(anecdote =>
