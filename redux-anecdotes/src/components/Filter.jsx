@@ -1,11 +1,12 @@
 import { useDispatch } from 'react-redux'
+
 const Filter = () => {
   const dispatch = useDispatch()
   const handleChange = (event) => {
     event.preventDefault()
     const content = event.target.value
     dispatch({
-      type: 'CHANGE_FILTER',
+      type: 'filter/filterReducer',
       payload: content
     })
   }
