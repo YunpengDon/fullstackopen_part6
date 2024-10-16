@@ -24,6 +24,15 @@ const AnecdotesList = () => {
         id: id
       }
     })
+    dispatch({
+      type: 'notification/changeNotification',
+      payload: `you voted ${anecdotes.filter(n => n.id === id)[0].content}`
+    })
+    setTimeout(() => {
+      dispatch({
+        type: 'notification/removeNotification',
+      })
+    }, 5000)
   }
 
   return (
