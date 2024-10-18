@@ -1,38 +1,25 @@
 import { useSelector, useDispatch } from 'react-redux'
 import { createSelector } from '@reduxjs/toolkit'
+import { updateVoteAnecdote } from '../reducers/anecdoteReducer'
+import { showNotification } from '../reducers/notificationReducer'
 
 const AnecdotesList = () => {
-  // const anecdotes = useSelector(state => state.anecdotes)
-  // const anecdotes = useSelector(({filter, anecdotes}) => anecdotes.filter(n => n.content.toLowerCase().includes(filter.toLowerCase())))
+  const dispatch = useDispatch()
   
   const selectFilter = state => state.filter
   const selectAnecdotes = state => state.anecdotes
   const selectFilteredAnecdotes = createSelector(
     [selectFilter, selectAnecdotes],
     (filter, anecdotes) => {
-      return anecdotes.filter(n => n.content.toLowerCase().includes(filter.toLowerCase()))
+      return anecdotes.filter(n => n.content.toLowerCase().includes(filter.toLowerCase())).sort((a, b) => b.votes - a.votes)
     }
   )
+  
   const anecdotes = useSelector(selectFilteredAnecdotes)
   
-  const dispatch = useDispatch()
-  
   const vote = (id) => {
-    dispatch({
-      type: 'anecdotes/voteAnecdote',
-      payload: {
-        id: id
-      }
-    })
-    dispatch({
-      type: 'notification/changeNotification',
-      payload: `you voted ${anecdotes.filter(n => n.id === id)[0].content}`
-    })
-    setTimeout(() => {
-      dispatch({
-        type: 'notification/removeNotification',
-      })
-    }, 5000)
+    dispatch(updateVoteAnecdote(id))
+    dispatch(showNotification(`you voted '${anecdotes.filter(n => n.id === id)[0].content}'`,10))
   }
 
   return (
